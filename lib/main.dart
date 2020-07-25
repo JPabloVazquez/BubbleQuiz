@@ -1,10 +1,17 @@
+/**
+ * autor: Juan Pablo Vázquez Redondo
+ * TFG: Gamificación
+ * Director: Javier Bravo
+ * Año: Septiembre 2020
+ */
 import 'package:flutter/material.dart';
 
 import 'package:frideos/frideos.dart';
 
 import 'src/homepage.dart';
-import 'src/models/appstate.dart';
-import 'src/models/theme.dart';
+import 'src/modelos/appstate.dart';
+import 'src/modelos/tema.dart';
+
 
 void main() => runApp(App());
 
@@ -25,17 +32,17 @@ class MaterialPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = AppStateProvider.of<AppState>(context).currentTheme;
 
-    return ValueBuilder<MyTheme>(
+    return ValueBuilder<MiTema>(
         streamed: theme,
         builder: (context, snapshot) {
           return MaterialApp(
-              title: 'Trivia example',
+              title: 'Bubble Quiz',
               theme: _buildThemeData(snapshot.data),
               home: HomePage());
         });
   }
 
-  ThemeData _buildThemeData(MyTheme appTheme) {
+  ThemeData _buildThemeData(MiTema appTheme) {
     return ThemeData(
       brightness: appTheme.brightness,
       backgroundColor: appTheme.backgroundColor,

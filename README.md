@@ -1,31 +1,26 @@
-# Trivia game example
-
-A simple trivia game built with Flutter and the [frideos](https://pub.dartlang.org/packages/frideos) package.
-
-Article on Medium.com here: https://medium.com/flutter-community/flutter-how-to-build-a-quiz-game-596d0f369575
-
-Alternative version using the [rebuilder](https://pub.dartlang.org/packages/rebuilder) package [here](https://github.com/frideosapps/trivia_rebuilder).
-
-**features**:
-
-- State management
-- Streams and BLoC pattern
-- Dynamic theme changer
-- Settings page
-- Switchable quiz API (mock questions or quiz from https://opentdb.com/)
-- Json data (fetching and parsing)
-- Animations
-- Text shadows
+# Bubble Quiz
 
 
-### Packages used:
+**características**:
+
+- La gestión del Estado
+- Corrientes y patrón BLoC
+- Cambiador de tema dinámico
+- Página de ajustes
+- API de preguntas intercambiables (preguntas de prueba o cuestionario de https://opentdb.com/)
+- Datos de Json (búsqueda y análisis)
+- Animaciones
+- Sombras de texto
+
+
+### Packages usado:
 
 - [Frideos-flutter](https://pub.dartlang.org/packages/frideos)
 
 
-## Screenshots
-![AnimatedGif](screenshots/anim.gif)
-![Screenshot](screenshots/1.png)
-![Screenshot](screenshots/2.png)
-![Screenshot](screenshots/3.png)
-![Screenshot](screenshots/4.png)
+## Captura de pantalla
+
+![Captura de pantalla](screenshots/1.png)
+![Captura de pantalla](screenshots/2.png)
+![Captura de pantalla](screenshots/3.png)
+![Captura de pantalla](screenshots/4.png)

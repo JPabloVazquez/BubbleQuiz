@@ -1,35 +1,50 @@
+/**
+ * autor: Juan Pablo Vázquez Redondo
+ * TFG: Gamificación
+ * Director: Javier Bravo
+ * Año: Septiembre 2020
+ */
+
 import 'package:flutter/material.dart';
 
 import 'package:frideos/frideos.dart';
+import 'pantallas/page_ranking.dart';
 
-import 'models/appstate.dart';
-import 'models/models.dart';
-import 'screens/main_page.dart';
-import 'screens/settings_page.dart';
-import 'screens/summary_page.dart';
-import 'screens/trivia_page.dart';
+import 'modelos/appstate.dart';
+import 'modelos/modelos.dart';
+import 'pantallas/page_principal.dart';
+import 'pantallas/page_configuracion.dart';
+import 'pantallas/page_resumen.dart';
+import 'pantallas/page_juego.dart';
+import 'pantallas/page_log.dart';
 
-/// Styles
+/// Estilos
 const textStyle = TextStyle(color: Colors.blue);
 const iconColor = Colors.blueGrey;
 
+/**
+ * Clase de maneja la pagina principal
+ */
 class HomePage extends StatelessWidget {
   Widget _switchTab(AppTab tab, AppState appState) {
     switch (tab) {
       case AppTab.main:
-        return MainPage();
+        return PagPpal();
         break;
       case AppTab.trivia:
-        return TriviaPage();
+        return PagPlay();
         break;
       case AppTab.summary:
-        return SummaryPage(stats: appState.triviaBloc.stats);
+        return PagResumen(stats: appState.triviaBloc.stats);
         break;
       default:
-        return MainPage();
+        return PagPpal();
     }
   }
 
+  /**
+   * Metodo que contruye la pagina principal
+   */
   @override
   Widget build(BuildContext context) {
     final appState = AppStateProvider.of<AppState>(context);
@@ -45,6 +60,9 @@ class HomePage extends StatelessWidget {
   }
 }
 
+/**
+ * Metodo que dibuja el widget
+ */
 class DrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -55,7 +73,7 @@ class DrawerWidget extends StatelessWidget {
           DrawerHeader(
             child: Center(
               child: const Text(
-                'TRIVIA',
+                'BUBBLEQUIZ',
                 style: TextStyle(
                   fontSize: 36.0,
                   fontWeight: FontWeight.w700,
@@ -76,17 +94,37 @@ class DrawerWidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: const Text('Settings'),
+            title: const Text('Configuración'),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SettingsPage()),
+                MaterialPageRoute(builder: (context) => PagConfig()),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('Ranking'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PagRanking()),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('Log'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LogPage()),
               );
             },
           ),
           const AboutListTile(
-            child: Text('Made with Flutter'),
+            child: Text(''),
           ),
         ],
       ),

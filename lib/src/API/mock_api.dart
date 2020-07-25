@@ -1,39 +1,72 @@
+/**
+ * autor: Juan Pablo Vázquez Redondo
+ * TFG: Gamificación
+ * Director: Javier Bravo
+ * Año: Septiembre 2020
+ */
+
 import 'dart:async';
 
 import 'dart:convert' as convert;
 
 import 'package:frideos_core/frideos_core.dart';
 
-import '../models/category.dart';
-import '../models/question.dart';
+import '../modelos/categoria.dart';
+import '../modelos/pregunta.dart';
 
-import 'api_interface.dart';
+import 'interfaz_api.dart';
+import '../log/logger.dart';
 
-class MockAPI implements QuestionsAPI {
+/*
+ * Clase de prueba con datos en local que en un futuro podria guardarse en base de datos
+ */
+class MockAPI implements PreguntasAPI {
+  Logger logger = new Logger();
   @override
   Future<bool> getCategories(StreamedList<Category> categories) async {
+    logger.log('MockAPI.getCategories',Level.DEBUG, '---------START-----------','');
     categories.value = [];
 
     categories.addElement(
-      Category(id: 1, name: 'Category demo'),
+      Category(id: 0, name: 'Categoria udima'),
     );
+    categories.addElement(
+      Category(id: 1, name: 'Estructuras de datos'),
+    );
+    logger.log('MockAPI.getCategories',Level.DEBUG, '---------FIN-----------','');
     return true;
   }
 
+  /*
+   * metodo que recupera las preguntas dependiedo de los valores [categoria][number][difficulty][type]
+   */
   @override
   Future<bool> getQuestions(
       {StreamedList<Question> questions,
-      int number,
-      Category category,
-      QuestionDifficulty difficulty,
-      QuestionType type}) async {
-    const json =
-        "{\"response_code\":0,\"results\":[{\"category\":\"General Knowledge\",\"type\":\"multiple\",\"difficulty\":\"easy\",\"question\":\"What is the largest organ of the human body?\",\"correct_answer\":\"Skin\",\"incorrect_answers\":[\"Heart\",\"large Intestine\",\"Liver\"]},{\"category\":\"Science: Mathematics\",\"type\":\"multiple\",\"difficulty\":\"easy\",\"question\":\"In Roman Numerals, what does XL equate to?\",\"correct_answer\":\"40\",\"incorrect_answers\":[\"60\",\"15\",\"90\"]},{\"category\":\"Entertainment: Television\",\"type\":\"multiple\",\"difficulty\":\"easy\",\"question\":\"Grant Gustin plays which superhero on the CW show of the same name?\",\"correct_answer\":\"The Flash\",\"incorrect_answers\":[\"The Arrow\",\"Black Canary\",\"Daredevil\"]},{\"category\":\"Entertainment: Cartoon & Animations\",\"type\":\"multiple\",\"difficulty\":\"easy\",\"question\":\"In the 1993 Disney animated series, what is the name of Bonker\'s second partner?\",\"correct_answer\":\"Miranda Wright\",\"incorrect_answers\":[\"Dick Tracy\",\"Eddie Valiant\",\"Dr. Ludwig von Drake\"]},{\"category\":\"Geography\",\"type\":\"multiple\",\"difficulty\":\"easy\",\"question\":\"How many countries does Mexico border?\",\"correct_answer\":\"3\",\"incorrect_answers\":[\"2\",\"4\",\"1\"]}]}";
+        int number,
+        Category category,
+        QuestionDifficulty difficulty,
+        QuestionType type}) async {
+    logger.log('MockAPI.getQuestions',Level.DEBUG, '---------START-----------','');
+    var categoria = category.name;
+    logger.log('MockAPI.getQuestions',Level.DEBUG, 'categoria: $categoria','');
+    DateTime now = new DateTime.now();
+    var json;
+    switch(categoria) {
+      case "Estructuras de datos": {
+        json = "{\"response_code\":0,\"results\":[{\"category\":\"Science: Computers\",\"type\":\"multiple\",\"difficulty\":\"easy\",\"question\":\"¿Cual de los siguientes costes es más deseable en un algoritmo?\",\"correct_answer\":\"Lineal\",\"incorrect_answers\":[\"NlogN\",\"^3\",\"^2\"]},{\"category\":\"Science: Computers\",\"type\":\"multiple\",\"difficulty\":\"easy\",\"question\":\"¿Cual de los siguientes costes es más deseable en un algoritmo?\",\"correct_answer\":\"Cte\",\"incorrect_answers\":[\"Lineal\",\"Log\",\"^2\"]},{\"category\":\"Science: Computers\",\"type\":\"multiple\",\"difficulty\":\"easy\",\"question\":\"¿Cual de los siguientes costes es menos deseable en un algoritmo?\",\"correct_answer\":\"Exp\",\"incorrect_answers\":[\"^3\",\"NlogN\",\"^2\"]},{\"category\":\"Science: Computers\",\"type\":\"multiple\",\"difficulty\":\"easy\",\"question\":\"¿Que accion realiza sobre un elemento la operación desapilar en una pila?\",\"correct_answer\":\"Supr\",\"incorrect_answers\":[\"Ins\",\"Fin\",\"Get\"]},{\"category\":\"Science: Computers\",\"type\":\"multiple\",\"difficulty\":\"easy\",\"question\":\"¿Cual de los siguientes costes es más deseable en un algoritmo?\",\"correct_answer\":\"NlogN\",\"incorrect_answers\":[\"Exp\",\"^3`\",\"^2\"]}]}";
+        print("$now Excelent");
+      }
+      break;
+      default: { print("Invalid choice"); }
+      break;
+    }
+
 
     final jsonResponse = convert.jsonDecode(json);
 
     final result = (jsonResponse['results'] as List)
-        .map((question) => QuestionModel.fromJson(question));
+        .map((question) => ModeloPregunta.fromJson(question));
 
     questions.value =
         result.map((question) => Question.fromQuestionModel(question)).toList();
